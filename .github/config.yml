@@ -1,0 +1,39 @@
+name: MySite CI
+
+on: [push]
+
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 11.x, 12.x, 13.x, 14.x, 15.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache node modules
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ~/.npm/github-actions-cache
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+
+    - name: Install Dependencies
+      run: yarn
+
+    - name: Show Current Branch
+      run: echo ${BRANCH_NAME}
+
+    - name: Check Lint
+      run: yarn lint
+
+    - name: Tests
+      run: yarn test
+
+    - name: Bulid
+      run: yarn build            
+
+
