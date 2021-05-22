@@ -3,7 +3,8 @@ name: MySite CI
 on: [push]
 
 jobs:
-  build: 
+  build:
+    name: Lint and Run 
     runs-on: ubuntu-latest
     strategy:
       matrix:
