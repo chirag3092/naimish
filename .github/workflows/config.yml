@@ -25,7 +25,7 @@ jobs:
       run: yarn
 
     - name: Show Current Branch
-      run: echo ${BRANCH_NAME}
+      run: echo ${GITHUB_REF##*/}
 
     - name: Check Lint
       run: yarn lint
